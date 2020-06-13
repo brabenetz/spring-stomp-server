@@ -4,8 +4,8 @@ dist: trusty
 # Coverity and coveralls should only run in "code-quality" branch (not on each submit)
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
+   # secure key is copied from coverity project page on "Submitted first build" the tab travis-ci:
+   # See https://scan.coverity.com/projects/brabenetz-spring-stomp-server/builds/new?tab=travis_ci 
    - secure: "LYgsV8znofoJ+mD9CW4xJAlWecOtNWVJ4svHlNvoJPsHOXaZhc6Ebh+Mb2ThIXca4y2R00DS7G1lZfBA9G1uWW+7gWZVuDP9KD/vLMzncEND3bvi2RABYitgcZzZJWrESn5CXFqKKFoEgso2coP/WTa0pkOkihm9fj5I1hOCedftZaKeyJ+AdOcIJ7INMVH55EJfsxQg36ZMEe640mfVV4xbIinKjvIDBkx7uIt5ja3LVG7lW8PGCA7gHWjIstgnPaivvBwafkRS+YZmGaW5k0npqm75D8I7+rTaDsvpkR9/CRnzd61fduPZPh5b4oNSoxEQSgV1aTx/lbqZsXLnafjvT0X8q2ZTlPLRKNidBhyKdsBu54gkRjQSht/DARazgqTOyocpgTRv9gMe2RqBlNyglxyIr0hbh8zYaBc/c64CUT6TWOkiazovPgOhI1d4XvLwTd4g+HjxuVGyMjv0H6hMTHlDN+B6qz3naLELoQD7DiH7Kbdv97/e2YvbKGHXEFj4fsL1efMJo1DL3VfneEWOZRINrmMV6bFFkAKNU2sgm1lAqUjwvV+eNXfTsUv9GOrkvD23bRm/VSembFGevSjndCA11Q+YS6tuqLSAAXGBIAU+j5ewYS6tEAsXRH7g8ymxOyZn0xq43lJCmpo+JBhNoOOcpxhWIV8Hy1pNhag="
 
 before_install:
