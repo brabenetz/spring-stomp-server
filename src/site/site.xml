@@ -1,0 +1,57 @@
+<!--
+  #%L
+  Spring Stomp Server
+  ===============================================================
+  Copyright (C) 2020 Brabenetz Harald, Austria
+  ===============================================================
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<project name="Spring Stomp Server">
+  <publishDate position="left" format="dd. MMM yyyy HH:mm" />
+  <bannerLeft>
+    <name>Spring Stomp Server</name>
+    <!-- <src>images/spring-stomp-server-logo-37px.png</src> -->
+    <href>http://spring-stomp-server.brabenetz.net</href>
+  </bannerLeft>
+  <bannerRight>
+    <name>GitHub</name>
+    <src>images/github-logo-37px.png</src>
+    <href>https://github.com/brabenetz/spring-stomp-server</href>
+  </bannerRight>
+  <body>
+    <menu name="Spring Stomp Server">
+      <item name="Overview" href="index.html" />
+      <item name="Configuration" href="configuration.html" />
+      <item name="Changes" href="changes-report.html" />
+      <item name="Archiv" href="http://spring-stomp-server.brabenetz.net/archiv/" />
+    </menu>
+    <menu ref="reports" />
+  </body>
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.5</version>
+  </skin>
+  <custom>
+    <fluidoSkin>
+      <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+      <googleSearch />
+      <gitHub>
+        <projectId>brabenetz/spring-stomp-server</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>black</ribbonColor>
+      </gitHub>
+    </fluidoSkin>
+  </custom>
+</project>

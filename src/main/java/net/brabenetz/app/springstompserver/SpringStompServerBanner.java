@@ -1,3 +1,22 @@
+/*-
+ * #%L
+ * Spring Stomp Server
+ * ===============================================================
+ * Copyright (C) 2020 Brabenetz Harald, Austria
+ * ===============================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 package net.brabenetz.app.springstompserver;
 
 import org.springframework.boot.Banner;
@@ -9,6 +28,9 @@ import org.springframework.core.env.Environment;
 import java.io.PrintStream;
 import java.util.Arrays;
 
+/**
+ * Ascii-Art Banner implementation for Spring-Stomp-Server.
+ */
 public class SpringStompServerBanner implements Banner {
 
     // example from http://patorjk.com/software/taag/#p=display&f=Big&t=Stomp-Server
@@ -29,7 +51,8 @@ public class SpringStompServerBanner implements Banner {
     private static final int STRAP_LINE_SIZE = Arrays.stream(BANNER).map(String::length).max(Integer::compare).orElse(0);
 
     @Override
-    public void printBanner(Environment environment, Class<?> sourceClass, PrintStream printStream) {
+    @SuppressWarnings("PMD.UseStringBufferForStringAppends")
+    public void printBanner(final Environment environment, final Class<?> sourceClass, final PrintStream printStream) {
         for (String line : BANNER) {
             printStream.println(line);
         }
@@ -38,7 +61,7 @@ public class SpringStompServerBanner implements Banner {
         version = (version != null) ? " v" + version : "";
         StringBuilder padding = new StringBuilder();
         while (padding.length() < STRAP_LINE_SIZE - (version.length() + APP_NAME.length())) {
-            padding.append(" ");
+            padding.append(' ');
         }
 
         printStream.println(AnsiOutput.toString(AnsiColor.GREEN, APP_NAME, AnsiColor.DEFAULT, padding.toString(),
