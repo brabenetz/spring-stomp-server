@@ -34,7 +34,7 @@
       <item name="Overview" href="index.html" />
       <item name="Configuration" href="configuration.html" />
       <item name="Changes" href="changes-report.html" />
-      <item name="Archiv" href="http://spring-stomp-server.brabenetz.net/archiv/" />
+      <item name="Archiv" href="https://brabenetz.github.io/spring-stomp-server/archiv/" />
     </menu>
     <menu ref="reports" />
   </body>
