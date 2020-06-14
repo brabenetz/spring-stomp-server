@@ -1,7 +1,6 @@
 [![Build Status](https://secure.travis-ci.org/brabenetz/spring-stomp-server.png?branch=master)](http://travis-ci.org/brabenetz/spring-stomp-server)
 [![Coverage Status](https://coveralls.io/repos/brabenetz/spring-stomp-server/badge.svg?branch=code-quality)](https://coveralls.io/github/brabenetz/spring-stomp-server?branch=code-quality)
-[![Coverity](https://scan.coverity.com/projects/10666/badge.svg)](https://scan.coverity.com/projects/brabenetz-spring-stomp-server)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f5c89c8143444b6ae39dddb1f329b8f)](https://www.codacy.com/app/brabenetz/spring-stomp-server?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=brabenetz/spring-stomp-server&amp;utm_campaign=Badge_Grade)
+[![Coverity](https://scan.coverity.com/projects/21312/badge.svg)](https://scan.coverity.com/projects/brabenetz-spring-stomp-server)
 [![Maven site](https://img.shields.io/badge/Maven-site-blue.svg)](http://spring-stomp-server.brabenetz.net/archiv/latest/)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache_2.0-brightgreen.svg)](https://github.com/brabenetz/spring-stomp-server/blob/master/LICENSE.txt)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.brabenetz.app/spring-stomp-server/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.brabenetz.lib/spring-stomp-server)
