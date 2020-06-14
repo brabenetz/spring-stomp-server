@@ -1,7 +1,7 @@
 [![Build Status](https://secure.travis-ci.org/brabenetz/spring-stomp-server.png?branch=master)](http://travis-ci.org/brabenetz/spring-stomp-server)
 [![Coverage Status](https://coveralls.io/repos/brabenetz/spring-stomp-server/badge.svg?branch=code-quality)](https://coveralls.io/github/brabenetz/spring-stomp-server?branch=code-quality)
 [![Coverity](https://scan.coverity.com/projects/21312/badge.svg)](https://scan.coverity.com/projects/brabenetz-spring-stomp-server)
-[![Maven site](https://img.shields.io/badge/Maven-site-blue.svg)](http://spring-stomp-server.brabenetz.net/archiv/latest/)
+[![Maven site](https://img.shields.io/badge/Maven-site-blue.svg)](https://brabenetz.github.io/spring-stomp-server/)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache_2.0-brightgreen.svg)](https://github.com/brabenetz/spring-stomp-server/blob/master/LICENSE.txt)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.brabenetz.app/spring-stomp-server/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.brabenetz.lib/spring-stomp-server)
 [![Javadocs](http://www.javadoc.io/badge/net.brabenetz.app/spring-stomp-server.svg)](http://www.javadoc.io/doc/net.brabenetz.app/spring-stomp-server)
@@ -101,7 +101,4 @@ package.json:
 
 ## More Details
 
-  * Maven Site: http://spring-stomp-server.brabenetz.net/archiv/latest/index.html
-  * Dependency-Information: http://spring-stomp-server.brabenetz.net/archiv/latest/download.html
-
-
+  * Maven Site: https://brabenetz.github.io/spring-stomp-server/archiv/latest/index.html
