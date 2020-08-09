@@ -20,8 +20,9 @@ For e2e tests with angular, a Mock-Websocket-Stomp server is needed to also auto
 
 The benefit to use Spring Stomp Server as mock websocket endpoint is:
 
-  * It is more realistic if your real enpoint is a spring-boot application
   * Easy to use, even without java knowledge
+  * Interoperability: works on linux, mac-os and windows the same way (only java 8 or higher is needed)
+  * It is the most realistic way if your real enpoint is a spring-boot application
 
 **"Spring Stomp Server" should never be used on a Production System! It is only designed to be used as simple Mock-Server for automatic tests.**
 
@@ -31,6 +32,7 @@ the usage can be summerized into two steps:
 
 * download jar from the central Maven Repository
 * start the application with "`java -jar`" 
+* custom config with System-Properties "`-D...`" AND/OR by YAML "`spring-stomp-server.yaml`"  
 
 ### download jar from the central Maven Repository
 
@@ -77,16 +79,16 @@ package.json:
 ``` js
   "scripts": {
     ...
-    "stomp-server": "java -jar -Dserver.port=8182 -Dserver.servlet.context-path=/my-backend-app -Dspring-stomp-server.destination-prefixes=/topic,/app,/user -Dspring-stomp-server.websocket-endpoints=/websocket ./target/spring-stomp-server.jar ",
+    "stomp-server": "java -jar ./target/spring-stomp-server.jar ",
     ...
   },
 ```
-With that, the Websocket endpoint will be ws:/localhost:8182/my-backend-app/websocket \
+With that, the Websocket endpoint will be ws:/localhost:8182/websocket \
 And the Stomp Config will listen on all destinations with the prefixes "/topic", "/app", "/user".
 
 For local development you can simply start the server in the background by "`npm run stomp-server`".
 
-For e2e tests, you can do it with the npm package 'concurrently':
+For **e2e tests**, you can do it with the npm package 'concurrently':
 
 package.json:
 ``` js
@@ -98,7 +100,56 @@ package.json:
   },
 ```
 
+### custom configuration
+
+The preferd way to apply a custom config is by System-Properties "`-D...`" AND/OR by YAML "`spring-stomp-server.yaml`". \
+(There are more ways, see: https://www.tutorialspoint.com/spring_boot/spring_boot_application_properties.htm )
+
+If a property exists as SystemProperty AND in YAML, the SystemProperty wins.
+
+A detailed description for the most relevant properties can be found in: \
+https://brabenetz.github.io/spring-stomp-server/archiv/latest/configuration.html
+
+#### custom configuration with System-Properties
+
+package.json:
+``` js
+  "scripts": {
+    ...
+    "stomp-server": "java -jar -Dserver.port=8182 -Dspring-stomp-server.destination-prefixes=/topic,/app,/user -Dspring-stomp-server.websocket-endpoints=/my-backend-app/websocket ./target/spring-stomp-server.jar ",
+    ...
+  },
+```
+With that, the Websocket endpoint will be ws:/localhost:8182/my-backend-app/websocket \
+And the Stomp Config will listen on all destinations with the prefixes "/topic", "/app", "/user".
+
+#### custom configuration with spring-stomp-server.yaml
+
+package.json:
+``` js
+  "scripts": {
+    ...
+    "stomp-server": "java -jar ./target/spring-stomp-server.jar ",
+    ...
+  },
+```
+
+spring-stomp-server.yaml: (in same folder as package.json)
+``` yaml
+server.port: 8182
+spring-stomp-server:
+  websocket-endpoints:
+  - "/my-backend-app/websocket"
+  destination-prefixes:
+  - "/topic"
+  - "/app"
+  - "/user"
+```
+
+With that, the Websocket endpoint will be ws:/localhost:8182/my-backend-app/websocket \
+And the Stomp Config will listen on all destinations with the prefixes "/topic", "/app", "/user".
 
 ## More Details
 
   * Maven Site: https://brabenetz.github.io/spring-stomp-server/archiv/latest/index.html
+  * Maven Site: https://brabenetz.github.io/spring-stomp-server/archiv/latest/configuration.html

@@ -26,6 +26,12 @@
     <author email="brabenetz@users.sourceforge.net">Harald Brabenetz</author>
   </properties>
   <body>
+    <release version="1.0.1" date="2020-08-09" description="additional configurations">
+      <action dev="brabenetz" type="add" date="2020-08-09">
+        Add additional configurations (e.g.: messageSizeLimit).
+        See https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/config/annotation/WebSocketTransportRegistration.html
+      </action>
+    </release>
     <release version="1.0.0" date="2020-06-13" description="First release">
       <action dev="brabenetz" type="add" date="2020-06-13">
         Spring-Boot-Application with a very simple Websocket-Stomp Configurion as descript by the Spring Boot Guides: https://spring.io/guides/gs/messaging-stomp-websocket/

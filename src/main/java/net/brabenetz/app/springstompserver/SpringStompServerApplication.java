@@ -38,6 +38,9 @@ public class SpringStompServerApplication {
 
     /** Spring boot start. */
     public static void main(final String[] args) {
+        if (System.getProperty("spring.config.name") == null) {
+            System.setProperty("spring.config.name", "spring-stomp-server");
+        }
 
         new SpringApplicationBuilder(SpringStompServerApplication.class)
                 .bannerMode(Mode.OFF)

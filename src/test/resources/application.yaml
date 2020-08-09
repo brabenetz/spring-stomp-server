@@ -17,5 +17,12 @@
 # limitations under the License.
 # #L%
 ###
-spring-stomp-server.destination-prefixes=/user,/topic,/app
-spring-stomp-server.websocket-endpoints=/websocket
+spring-stomp-server:
+  destination-prefixes:
+  - /user
+  - /topic
+  - /app
+  websocket-endpoints:
+  - /websocket
+  with-sock-js: true
+    

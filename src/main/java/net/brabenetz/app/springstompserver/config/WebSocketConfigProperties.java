@@ -22,6 +22,7 @@ package net.brabenetz.app.springstompserver.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 /**
  * Additional Websocket Stomp Properties use in the {@link WebSocketConfig}.
@@ -43,6 +44,43 @@ public class WebSocketConfigProperties {
      */
     private String[] websocketEndpoints = new String[] {"/websocket"};
 
+    /**
+     * The WebSocketTransportRegistration messageSizeLimit. Optional, The default value is 64K (i.e. 64 * 1024).
+     *
+     * @see WebSocketTransportRegistration#setMessageSizeLimit(int)
+     */
+    private Integer messageSizeLimit;
+
+    /**
+     * The WebSocketTransportRegistration sendBufferSizeLimit. Optional, The default value is 512K (i.e. 512 * 1024).
+     *
+     * @see WebSocketTransportRegistration#setSendBufferSizeLimit(int)
+     */
+    private Integer sendBufferSizeLimit;
+
+    /**
+     * The WebSocketTransportRegistration sendTimeLimit. Optional, The default value is 10 seconds (i.e. 10 * 10000).
+     *
+     * @see WebSocketTransportRegistration#setSendTimeLimit(int)
+     */
+    private Integer sendTimeLimit;
+
+    /**
+     * The WebSocketTransportRegistration timeToFirstMessage. Optional, The default is set to 60,000 (1 minute).
+     *
+     * @see WebSocketTransportRegistration#setTimeToFirstMessage(int)
+     */
+    private Integer timeToFirstMessage;
+
+    /**
+     * Set to true if a SockJs-Supported Endpoint should be registered.
+     * <p>
+     * Default is false, because nowadays (2020) all Browsers support Websockets natively.
+     *
+     * @see <a href="https://stomp-js.github.io/guide/stompjs/rx-stomp/ng2-stompjs/using-stomp-with-sockjs.html">StompJs: using-stomp-with-sockjs.html</a>
+     */
+    private boolean withSockJs = false;
+
     public String[] getDestinationPrefixes() {
         return destinationPrefixes;
     }
@@ -57,6 +95,46 @@ public class WebSocketConfigProperties {
 
     public void setWebsocketEndpoints(final String... websocketEndpoints) {
         this.websocketEndpoints = websocketEndpoints;
+    }
+
+    public Integer getMessageSizeLimit() {
+        return messageSizeLimit;
+    }
+
+    public void setMessageSizeLimit(Integer messageSizeLimit) {
+        this.messageSizeLimit = messageSizeLimit;
+    }
+
+    public Integer getSendBufferSizeLimit() {
+        return sendBufferSizeLimit;
+    }
+
+    public void setSendBufferSizeLimit(Integer sendBufferSizeLimit) {
+        this.sendBufferSizeLimit = sendBufferSizeLimit;
+    }
+
+    public Integer getSendTimeLimit() {
+        return sendTimeLimit;
+    }
+
+    public void setSendTimeLimit(Integer sendTimeLimit) {
+        this.sendTimeLimit = sendTimeLimit;
+    }
+
+    public Integer getTimeToFirstMessage() {
+        return timeToFirstMessage;
+    }
+
+    public void setTimeToFirstMessage(Integer timeToFirstMessage) {
+        this.timeToFirstMessage = timeToFirstMessage;
+    }
+
+    public boolean isWithSockJs() {
+        return withSockJs;
+    }
+
+    public void setWithSockJs(boolean withSockJs) {
+        this.withSockJs = withSockJs;
     }
 
 }

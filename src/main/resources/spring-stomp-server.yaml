@@ -17,4 +17,20 @@
 # limitations under the License.
 # #L%
 ###
-server.port=8182
+server.port: 8182
+
+# Example config:
+spring-stomp-server:
+  websocket-endpoints:
+  - /my-backend-app/websocket
+  - /other-backend-app/websocket
+  destination-prefixes:
+  - /topic
+  - /app
+  - /user
+  with-sock-js: true
+  message-size-limit: 64000
+  send-buffer-size-limit: 512000
+  send-time-limit: 10000
+  time-to-first-message: 60000
+  

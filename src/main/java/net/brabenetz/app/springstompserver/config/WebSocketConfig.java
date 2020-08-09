@@ -26,6 +26,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 /**
  * The Websocket Stomp Configuration.
@@ -49,7 +50,26 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
         registry.addEndpoint(properties.getWebsocketEndpoints()); // normal WebSocket
-        registry.addEndpoint(properties.getWebsocketEndpoints()).withSockJS(); // SockJs
+
+        if (properties.isWithSockJs()) {
+            registry.addEndpoint(properties.getWebsocketEndpoints()).withSockJS(); // SockJs
+        }
+    }
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+        if (properties.getMessageSizeLimit() != null) {
+            registry.setMessageSizeLimit(properties.getMessageSizeLimit()); // The default value is 64K (i.e. 64 * 1024).
+        }
+        if (properties.getSendBufferSizeLimit() != null) {
+            registry.setSendBufferSizeLimit(properties.getSendBufferSizeLimit()); // The default value is 512K (i.e. 512 * 1024).
+        }
+        if (properties.getSendTimeLimit() != null) {
+            registry.setSendTimeLimit(properties.getSendTimeLimit()); // The default value is 10 seconds (i.e. 10 * 10000).
+        }
+        if (properties.getTimeToFirstMessage() != null) {
+            registry.setTimeToFirstMessage(1000); // The default is set to 60,000 (1 minute).
+        }
     }
 
 }
