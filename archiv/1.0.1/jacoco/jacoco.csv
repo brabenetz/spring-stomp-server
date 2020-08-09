@@ -1,0 +1,6 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Spring Stomp Server,net.brabenetz.app.springstompserver,SpringStompServerApplication.AppPrepare,33,0,0,0,8,0,3,0,3,0
+Spring Stomp Server,net.brabenetz.app.springstompserver,SpringStompServerApplication,40,3,2,0,10,1,2,1,1,1
+Spring Stomp Server,net.brabenetz.app.springstompserver,SpringStompServerBanner,9,134,1,5,0,13,1,5,0,3
+Spring Stomp Server,net.brabenetz.app.springstompserver.config,WebSocketConfig,25,48,5,5,4,13,5,4,0,4
+Spring Stomp Server,net.brabenetz.app.springstompserver.config,WebSocketConfigProperties,16,63,0,0,8,17,4,11,4,11

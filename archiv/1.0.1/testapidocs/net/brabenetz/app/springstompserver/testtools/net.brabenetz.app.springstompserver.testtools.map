@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node1_0" href="./WebSocketPayload.html" title="net.brabenetz.app.springstompserver.testtools.WebSocketPayload" alt="" coords="16,17,173,42"/>
+<area shape="rect" id="node1" href="./WebSocketPayload.html" title="&lt;TABLE&gt;" alt="" coords="5,5,184,53"/>
+<area shape="rect" id="node2_1" href="./WebSocketStompSessionHandler.html" title="net.brabenetz.app.springstompserver.testtools.WebSocketStompSessionHandler" alt="" coords="219,17,435,42"/>
+<area shape="rect" id="node2" href="./WebSocketStompSessionHandler.html" title="&lt;TABLE&gt;" alt="" coords="208,5,445,53"/>
+<area shape="rect" id="node3_2" href="./WebSocketUtils.html" title="net.brabenetz.app.springstompserver.testtools.WebSocketUtils" alt="" coords="481,17,594,42"/>
+<area shape="rect" id="node3" href="./WebSocketUtils.html" title="&lt;TABLE&gt;" alt="" coords="470,5,605,53"/>
+</map>
