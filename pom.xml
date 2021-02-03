@@ -455,6 +455,7 @@
                         <relativizeDecorationLinks>false</relativizeDecorationLinks>
                         <inputEncoding>${project.reporting.sourceEncoding}</inputEncoding>
                         <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+                        <generateSitemap>true</generateSitemap>
                     </configuration>
                     <dependencies>
                         <dependency>
