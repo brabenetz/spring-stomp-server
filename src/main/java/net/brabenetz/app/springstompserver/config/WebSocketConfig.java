@@ -21,6 +21,7 @@ package net.brabenetz.app.springstompserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -42,9 +43,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     private TaskScheduler messageBrokerTaskScheduler;
 
     @Override
-    public void configureMessageBroker(final MessageBrokerRegistry config) {
-        config.enableSimpleBroker(properties.getDestinationPrefixes())
+    public void configureMessageBroker(final MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker(properties.getDestinationPrefixes())
                 .setTaskScheduler(messageBrokerTaskScheduler);
+        // By default, messages from the application to the message broker are sentsynchronously.
+        registry.configureBrokerChannel().taskExecutor().corePoolSize(properties.getChannelBrokerCorePoolSize());
+        // The default cache limit there is 1024.
+        registry.setCacheLimit(properties.getBrokerRegistryCacheLimit());
     }
 
     @Override
@@ -52,7 +57,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint(properties.getWebsocketEndpoints()); // normal WebSocket
 
         if (properties.isWithSockJs()) {
-            registry.addEndpoint(properties.getWebsocketEndpoints()).withSockJS(); // SockJs
+            registry.addEndpoint(properties.getWebsocketEndpoints()).withSockJS(); // SockJs Legacy support.
         }
     }
 
@@ -70,6 +75,18 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         if (properties.getTimeToFirstMessage() != null) {
             registry.setTimeToFirstMessage(1000); // The default is set to 60,000 (1 minute).
         }
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        // By default the channel is backed by a thread pool of size 1.
+        registration.taskExecutor().corePoolSize(properties.getChannelInboundCorePoolSize());
+    }
+
+    @Override
+    public void configureClientOutboundChannel(ChannelRegistration registration) {
+        // By default the channel is backed by a thread pool of size 1.
+        registration.taskExecutor().corePoolSize(properties.getChannelOutboundCorePoolSize());
     }
 
 }

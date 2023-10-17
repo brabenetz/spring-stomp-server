@@ -147,7 +147,8 @@ spring-stomp-server:
 ```
 
 With that, the Websocket endpoint will be ws:/localhost:8182/my-backend-app/websocket \
-And the Stomp Config will listen on all destinations with the prefixes "/topic", "/app", "/user".
+And the Stomp Config will listen on all destinations with the prefixes "/topic", "/app", "/user". \
+For More information about the configurations see JavaDoc: [WebSocketConfigProperties.java](./apidocs/net/brabenetz/app/springstompserver/config/WebSocketConfigProperties.html)
 
 ## More Details
 

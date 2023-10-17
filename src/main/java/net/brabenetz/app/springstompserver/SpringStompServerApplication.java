@@ -19,6 +19,7 @@
  */
 package net.brabenetz.app.springstompserver;
 
+import net.brabenetz.app.springstompserver.config.WebSocketConfigProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -36,7 +37,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SuppressWarnings("PMD.UseUtilityClass")
 public class SpringStompServerApplication {
 
-    /** Spring boot start. */
+    /**
+     * Spring boot start.
+     *
+     * @param args Override Conifg-Properties. See: {@link WebSocketConfigProperties}.
+     */
+    @SuppressWarnings("resource")
     public static void main(final String[] args) {
         if (System.getProperty("spring.config.name") == null) {
             System.setProperty("spring.config.name", "spring-stomp-server");
