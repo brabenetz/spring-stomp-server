@@ -27,6 +27,9 @@
   </properties>
   <body>
 <!--     <release version="1.1.0" date="2023-10-22" description="additional configurations"> -->
+<!--       <action dev="brabenetz" type="add" date="2023-10-24"> -->
+<!--         Add support for proxy initial load on a websocket-stomp-subscribe to another mock server like WireMock. -->
+<!--       </action> -->
 <!--       <action dev="brabenetz" type="add" date="2023-10-17"> -->
 <!--         Add additional configuration for CacheLimit and PoolSizes. Improve JavaDoc for WebSocketConfigProperties. -->
 <!--       </action> -->

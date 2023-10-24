@@ -18,6 +18,13 @@ spring-stomp-server:
   send-buffer-size-limit: 524288  # 512k
   send-time-limit: 10000          # 10s
   time-to-first-message: 60000    # 1m
+  broker-registry-cache-limit: 1024
+  channel-inbound-core-pool-size: 1
+  channel-outbound-core-pool-size: 1
+  channel-broker-core-pool-size: 1
+  init-load:
+     destinationPatterns: "^/user/[^/]+/topic/(.*)$"
+     proxy-url: "http://localhost:8181/trapla-prebo-fe-cmp/api/${group-1}"
 ```
 
 ## server.port
@@ -80,5 +87,56 @@ Set the maximum time allowed in milliseconds after the WebSocket connection is e
 By default this is set to 60,000 (1 minute).
 
 See  https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/config/annotation/WebSocketTransportRegistration.html#setTimeToFirstMessage-int-
+
+
+## broker-registry-cache-limit
+
+The cache limit to apply for registrations with the broker.
+
+This is currently only applied for the destination cache in the subscription registry. The default cache limit there is 1024.
+
+For performance-testing read https://programmersought.com/article/58855147686/ \
+... There is a fatal weakness in SimpleBrokerMessageHandler ... \
+... If the cache size exceeds the cacheLimit value, the original old The data is cleaned up, and when it is read again ...
+
+## channel-inbound-core-pool-size
+
+The MessageChannel PoolSize used for incoming messages from WebSocket clients. \
+See WebSocketMessageBrokerConfigurer#configureClientInboundChannel(...)
+
+By default the channel is backedby a thread pool of size 1.
+
+## channel-outbound-core-pool-size
+
+The MessageChannel PoolSize used for outbound messages to WebSocket clients. \
+See {WebSocketMessageBrokerConfigurer#configureClientOutboundChannel(...)
+
+By default the channel is backed by a thread pool of size 1.
+
+## channel-broker-core-pool-size
+
+The channel PoolSize used to send messages from the application to the message broker.
+
+By default, messages from the application to the message broker are sent synchronously, which means application code sending a message will find out if
+the message cannot be sent through an exception. \
+However, this can be changed if the broker channel is configured here with task executor properties.
+
+## init-load:
+
+The init-load is optional, if not proxy-url is configured, then this feature is disabled.
+
+## init-load.destinationPatterns
+
+The Websocket Subscription destination pattern like "/user/00001111-2222-3333-4444-555566667777/topic/...".
+
+Default: "^/user/[^/]+/topic/(.*)$"
+
+## init-load.proxy-url
+
+The proxy url from where the init load should be get, like: "http://localhost:8181/my-fe-cmp/api/${group-1}".
+
+Only GET requests are supported. \
+${group-1}, ${group-2}, ${group-3}, ... ${group-X} reference to the group-pattern from getDestinationPatterns().
+The Proxy-Server can then be a Mock-Server like https://wiremock.org/. With WireMock you can change the mocks on the fly via API for automatic tests.
 
 
