@@ -23,8 +23,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
-
 import java.util.regex.Pattern;
 
 /**
@@ -50,7 +48,6 @@ public class WebSocketInitLoadConfigProperties {
      * ${group-1}, ${group-2}, ${group-3}, ... ${group-X} reference to the group-pattern from {@link #getDestinationPatterns()}.<br>
      * The Proxy-Server can then be a Mock-Server like https://wiremock.org/
      */
-    @NotEmpty
     private String proxyUrl;
 
     /**
