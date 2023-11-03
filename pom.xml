@@ -4,13 +4,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.1.RELEASE</version>
+        <version>2.6.15</version>
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
     <groupId>net.brabenetz.app</groupId>
     <artifactId>spring-stomp-server</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>Spring Stomp Server</name>
     <description>Spring Stomp Server for ui e2e Websocket testing</description>
 
@@ -86,19 +86,24 @@
         <dependency-doxia-sink-api.version>1.9.1</dependency-doxia-sink-api.version>
         <dependency-wagon-git.version>2.0.3</dependency-wagon-git.version>
         <dependency-wagon-ssh.version>3.4.0</dependency-wagon-ssh.version>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <dependency-wiremock-spring-boot.version>2.0.0</dependency-wiremock-spring-boot.version>
+        <java.version>8</java.version>
+        <java.test.version>11</java.test.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.testSource>${java.test.version}</maven.compiler.testSource>
+        <maven.compiler.testTarget>${java.test.version}</maven.compiler.testTarget>
+        <jetty.version>11.0.17</jetty.version>
 
         <maven.version.rules>file:./src/config/dependency-version-rules.xml</maven.version.rules>
-        <plugin-animal-sniffer-maven-plugin.version>1.18</plugin-animal-sniffer-maven-plugin.version>
+        <plugin-animal-sniffer-maven-plugin.version>1.23</plugin-animal-sniffer-maven-plugin.version>
         <plugin-config-checkstyle-header-location>${basedir}/src/config/header.txt</plugin-config-checkstyle-header-location>
         <plugin-config-checkstyle-location>${basedir}/src/config/checkstyle.xml</plugin-config-checkstyle-location>
         <plugin-config-findbug-location>${basedir}/src/config/findbugs-exclude.xml</plugin-config-findbug-location>
         <plugin-config-pmd-location>${basedir}/src/config/pmd5-rulesets.xml</plugin-config-pmd-location>
         <plugin-coveralls-maven-plugin.version>4.3.0</plugin-coveralls-maven-plugin.version>
         <plugin-findbugs-maven-plugin.version>3.0.5</plugin-findbugs-maven-plugin.version>
-        <plugin-jacoco-maven-plugin.version>0.8.5</plugin-jacoco-maven-plugin.version>
+        <plugin-jacoco-maven-plugin.version>0.8.11</plugin-jacoco-maven-plugin.version>
         <plugin-javancss-maven-plugin.version>2.1</plugin-javancss-maven-plugin.version>
         <plugin-jdepend-maven-plugin.version>2.0</plugin-jdepend-maven-plugin.version>
         <plugin-license-maven-plugin.version>1.20</plugin-license-maven-plugin.version>
@@ -114,7 +119,7 @@
         <plugin-maven-gpg-plugin.version>1.6</plugin-maven-gpg-plugin.version>
         <plugin-maven-install-plugin.version>3.0.0-M1</plugin-maven-install-plugin.version>
         <plugin-maven-jar-plugin.version>3.2.0</plugin-maven-jar-plugin.version>
-        <plugin-maven-javadoc-plugin.version>3.2.0</plugin-maven-javadoc-plugin.version>
+        <plugin-maven-javadoc-plugin.version>3.6.0</plugin-maven-javadoc-plugin.version>
         <plugin-maven-jxr-plugin.version>3.0.0</plugin-maven-jxr-plugin.version>
         <plugin-maven-pmd-plugin.version>3.13.0</plugin-maven-pmd-plugin.version>
         <plugin-maven-project-info-reports-plugin.version>3.1.0</plugin-maven-project-info-reports-plugin.version>
@@ -152,13 +157,19 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <scope>test</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
+            <groupId>com.maciejwalkowiak.spring</groupId>
+            <artifactId>wiremock-spring-boot</artifactId>
+            <version>${dependency-wiremock-spring-boot.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -270,7 +281,8 @@
                         <additionalConfig>
                             <file>
                                 <name>.checkstyle</name>
-                                <content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                                <content>
+                                    <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
   <fileset-config file-format-version="1.2.0" simple-config="true">
       <local-check-config name="${project.artifactId}-checkstyle" location="src/config/checkstyle.xml" type="project" description="plugin-config-checkstyleuration for ${project.artifactId}">
           <property name="checkstyle.header.file" value="${plugin-config-checkstyle-header-location}" />
@@ -282,21 +294,25 @@
     <filter name="FileTypesFilter" enabled="true">
       <filter-data value="java" />
     </filter>
-  </fileset-config>]]></content>
+  </fileset-config>]]>
+                                </content>
                             </file>
                             <file>
                                 <name>.pmd</name>
-                                <content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                                <content>
+                                    <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
   <pmd>
       <useProjectRuleSet>true</useProjectRuleSet>
       <ruleSetFile>${basedir}/src/config/pmd5-rulesets.xml</ruleSetFile>
       <includeDerivedFiles>false</includeDerivedFiles>
       <violationsAsErrors>true</violationsAsErrors>
-  </pmd>]]></content>
+  </pmd>]]>
+                                </content>
                             </file>
                             <file>
                                 <name>.classpath</name>
-                                <content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                                <content>
+                                    <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
   <classpathentry kind="src" output="target/classes" path="src/main/java">
     <attributes>
@@ -331,7 +347,8 @@
     </attributes>
   </classpathentry>
   <classpathentry kind="output" path="target/classes" />
-</classpath>]]></content>
+</classpath>]]>
+                                </content>
                             </file>
                         </additionalConfig>
                     </configuration>
@@ -386,25 +403,15 @@
                     <version>${plugin-maven-javadoc-plugin.version}</version>
                     <configuration>
                         <show>package</show>
+                        <detectJavaApiLink>false</detectJavaApiLink>
                         <source>${maven.compile.source}</source>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <docEncoding>${project.reporting.outputEncoding}</docEncoding>
-                        <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
                         <links>
-                            <link>http://download.oracle.com/javase/1.6.0/docs/api/</link>
+                            <link>https://docs.oracle.com/javase/8/docs/api/</link>
                             <link>http://commons.apache.org/logging/apidocs/</link>
-                            <link>http://junit.org/javadoc/latest/</link>
                         </links>
-                        <docletArtifact>
-                            <groupId>org.umlgraph</groupId>
-                            <artifactId>umlgraph</artifactId>
-                            <version>5.6.6</version>
-                        </docletArtifact>
-                        <additionalparam>-inferrel -inferdep -quiet -hide java.*
-                            -collpackages java.util.* -qualify
-                            -postfixpackage
-                            -nodefontsize 9
-                            -nodefontpackagesize 7</additionalparam>
+                        <additionalOptions>-quiet -exclude java.*</additionalOptions>
                         <maxmemory>256m</maxmemory>
                     </configuration>
                 </plugin>
@@ -418,13 +425,12 @@
                     <artifactId>maven-pmd-plugin</artifactId>
                     <version>${plugin-maven-pmd-plugin.version}</version>
                     <configuration>
-                        <linkXref>true</linkXref>
+                        <linkXRef>true</linkXRef>
                         <targetJdk>${maven.compiler.target}</targetJdk>
                         <rulesets>
                             <ruleset>${plugin-config-pmd-location}</ruleset>
                         </rulesets>
                         <format>xml</format>
-                        <linkXref>true</linkXref>
                         <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                         <minimumTokens>100</minimumTokens>
                     </configuration>

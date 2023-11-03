@@ -19,7 +19,6 @@
  */
 package net.brabenetz.app.springstompserver;
 
-import net.brabenetz.app.springstompserver.config.WebSocketConfigProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -40,7 +39,7 @@ public class SpringStompServerApplication {
     /**
      * Spring boot start.
      *
-     * @param args Override Conifg-Properties. See: {@link WebSocketConfigProperties}.
+     * @param args Override Config-Properties. See: {@link net.brabenetz.app.springstompserver.config.WebSocketConfigProperties}.
      */
     @SuppressWarnings("resource")
     public static void main(final String[] args) {

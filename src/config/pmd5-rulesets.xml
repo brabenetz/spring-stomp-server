@@ -20,38 +20,39 @@
   -->
 
 <ruleset name="Spring Stomp Server rulesets" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
-	<description>This PMD Rulesets for Spring Stomp Server</description>
-  
-  <exclude-pattern>.*/src/test/.*</exclude-pattern>
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+    <description>This PMD Rulesets for Spring Stomp Server</description>
 
-	<rule ref="rulesets/java/basic.xml" />
-	<rule ref="rulesets/java/controversial.xml" >
-		<exclude name="UseConcurrentHashMap" />
-		<exclude name="DataflowAnomalyAnalysis" />
-    <exclude name="OnlyOneReturn" />
-	<exclude name="AtLeastOneConstructor" />
-	<exclude name="AvoidFinalLocalVariable"/>
-	</rule>
-	<rule ref="rulesets/java/unusedcode.xml" />
-	<rule ref="rulesets/java/strings.xml" />
-	<rule ref="rulesets/java/logging-jakarta-commons.xml" />
-	<rule ref="rulesets/java/codesize.xml" >
-		<exclude name="TooManyMethods" />
-	</rule>
-	<rule ref="rulesets/java/design.xml" >
-		<exclude name="ConfusingTernary" />
-		<exclude name="EmptyMethodInAbstractClassShouldBeAbstract" />
-	</rule>
-	<rule ref="rulesets/java/clone.xml" />
-	<rule ref="rulesets/java/finalizers.xml" />
-	<rule ref="rulesets/java/typeresolution.xml" />
-	<rule ref="rulesets/java/imports.xml" />
-	<rule ref="rulesets/java/j2ee.xml" />
-	<rule ref="rulesets/java/optimizations.xml" >
+    <exclude-pattern>.*/src/test/.*</exclude-pattern>
+
+    <rule ref="rulesets/java/basic.xml" />
+    <rule ref="rulesets/java/controversial.xml">
+        <exclude name="UseConcurrentHashMap" />
+        <exclude name="DataflowAnomalyAnalysis" />
+        <exclude name="OnlyOneReturn" />
+        <exclude name="AtLeastOneConstructor" />
+        <exclude name="AvoidFinalLocalVariable" />
+    </rule>
+    <rule ref="rulesets/java/unusedcode.xml" />
+    <rule ref="rulesets/java/strings.xml" />
+    <rule ref="rulesets/java/logging-jakarta-commons.xml" />
+    <rule ref="rulesets/java/codesize.xml">
+        <exclude name="TooManyMethods" />
+    </rule>
+    <rule ref="rulesets/java/design.xml">
+        <exclude name="ConfusingTernary" />
+        <exclude name="EmptyMethodInAbstractClassShouldBeAbstract" />
+    </rule>
+    <rule ref="rulesets/java/clone.xml" />
+    <rule ref="rulesets/java/finalizers.xml" />
+    <rule ref="rulesets/java/typeresolution.xml" />
+    <rule ref="rulesets/java/imports.xml" />
+    <rule ref="rulesets/java/j2ee.xml" />
+    <rule ref="rulesets/java/optimizations.xml">
         <exclude name="LocalVariableCouldBeFinal" />
+        <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="SimplifyStartsWith" />
-	</rule>
+    </rule>
 
 
 </ruleset>

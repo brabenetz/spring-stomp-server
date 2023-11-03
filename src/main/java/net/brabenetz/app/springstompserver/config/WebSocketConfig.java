@@ -21,6 +21,7 @@ package net.brabenetz.app.springstompserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.TaskScheduler;
@@ -40,6 +41,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     private WebSocketConfigProperties properties;
 
     @Autowired
+    @Lazy
     private TaskScheduler messageBrokerTaskScheduler;
 
     @Override
@@ -62,7 +64,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
 
     @Override
-    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+    public void configureWebSocketTransport(final WebSocketTransportRegistration registry) {
         if (properties.getMessageSizeLimit() != null) {
             registry.setMessageSizeLimit(properties.getMessageSizeLimit()); // The default value is 64K (i.e. 64 * 1024).
         }

@@ -132,7 +132,6 @@
         </module>
         <module name="IllegalImport"/>
         <module name="RedundantImport"/>
-        <module name="UnusedImports"/>
 
 
         <!-- Checks for Size Violations.                    -->
@@ -200,7 +199,6 @@
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
-        <module name="FinalParameters"/>
         <module name="Regexp">
             <metadata name="net.sf.eclipsecs.core.comment" value="Line has trailing spaces."/>
             <property name="format" value="\s+$"/>

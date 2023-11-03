@@ -80,7 +80,7 @@ public class WebSocketConfigProperties {
      *
      * @see <a href="https://stomp-js.github.io/guide/stompjs/rx-stomp/ng2-stompjs/using-stomp-with-sockjs.html">StompJs: using-stomp-with-sockjs.html</a>
      */
-    private boolean withSockJs = false;
+    private boolean withSockJs;
 
     /**
      * The cache limit to apply for registrations with the broker.

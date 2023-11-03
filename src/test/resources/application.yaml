@@ -26,5 +26,6 @@ spring-stomp-server:
   - /websocket
   with-sock-js: true
   init-load:
-     proxy-url: "http://localhost:8181/my-fe-cmp/api/${group-1}"
+    destination-patterns: "^/user/[^/]+/topic/(.*)"
+    proxy-url: "http://localhost:8181/mocked-init-load/${group-1}"
     

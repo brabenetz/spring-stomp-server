@@ -44,7 +44,7 @@ public class WebSocketInitLoadConfigProperties {
     private Pattern destinationPatterns = Pattern.compile("^/user/[^/]+/topic/(.*)$");
 
     /**
-     * The proxy url from where the init load should be get, like: "http://localhost:8181/my-fe-cmp/api/${group-1}".
+     * The proxy url from where the init load should be get, like: "http://localhost:8181/my-mock-endpoint/${group-1}".
      * <p>
      * Only GET requests are supported.<br>
      * ${group-1}, ${group-2}, ${group-3}, ... ${group-X} reference to the group-pattern from {@link #getDestinationPatterns()}.<br>
@@ -76,26 +76,26 @@ public class WebSocketInitLoadConfigProperties {
     }
 
     /**
-     * Gets the proxy url from where the init load should be get, like: "http://localhost:8181/my-fe-cmp/api/${group-1}".
+     * Gets the proxy url from where the init load should be get, like: "http://localhost:8181/my-mock-endpoint/${group-1}".
      * <p>
      * Only GET requests are supported.<br>
      * ${group-1}, ${group-2}, ${group-3}, .. ${group-X} reference to the group-pattern from {@link #getDestinationPatterns()}.<br>
      * The Proxy-Server can then be a Mock-Server like https://wiremock.org/.
      *
-     * @return the proxy url from where the init load should be get, like: "http://localhost:8181/my-fe-cmp/api/${group-1}"
+     * @return the proxy url from where the init load should be get, like: "http://localhost:8181/my-mock-endpoint/${group-1}"
      */
     public String getProxyUrl() {
         return proxyUrl;
     }
 
     /**
-     * Sets the proxy url from where the init load should be get, like: "http://localhost:8181/my-fe-cmp/api/${group-1}".
+     * Sets the proxy url from where the init load should be get, like: "http://localhost:8181/my-mock-endpoint/${group-1}".
      * <p>
      * Only GET requests are supported.<br>
      * ${group-1}, ${group-2}, ${group-3}, .. ${group-X} reference to the group-pattern from {@link #getDestinationPatterns()}.<br>
      * The Proxy-Server can then be a Mock-Server like https://wiremock.org/.
      *
-     * @param proxyUrl the new proxy url from where the init load should be get, like: "http://localhost:8181/my-fe-cmp/api/${group-1}"
+     * @param proxyUrl the new proxy url from where the init load should be get, like: "http://localhost:8181/my-mock-endpoint/${group-1}"
      */
     public void setProxyUrl(String proxyUrl) {
         this.proxyUrl = proxyUrl;

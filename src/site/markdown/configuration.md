@@ -23,8 +23,8 @@ spring-stomp-server:
   channel-outbound-core-pool-size: 1
   channel-broker-core-pool-size: 1
   init-load:
-     destinationPatterns: "^/user/[^/]+/topic/(.*)$"
-     proxy-url: "http://localhost:8181/trapla-prebo-fe-cmp/api/${group-1}"
+    destination-patterns: "^/user/[^/]+/topic/(.*)"
+    proxy-url: "http://localhost:8181/mocked-init-load/${group-1}"
 ```
 
 ## server.port
@@ -133,7 +133,7 @@ Default: "^/user/[^/]+/topic/(.*)$"
 
 ## init-load.proxy-url
 
-The proxy url from where the init load should be get, like: "http://localhost:8181/my-fe-cmp/api/${group-1}".
+The proxy url from where the init load should be get, like: "http://localhost:8181/my-mock-endpoint/${group-1}".
 
 Only GET requests are supported. \
 ${group-1}, ${group-2}, ${group-3}, ... ${group-X} reference to the group-pattern from getDestinationPatterns().

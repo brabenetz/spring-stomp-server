@@ -21,19 +21,29 @@ package net.brabenetz.app.springstompserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.messaging.support.NativeMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
-import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+/**
+ * Listen on all subscriptions, and if a subscription starts with {@link WebSocketInitLoadConfigProperties#getDestinationPatterns()}, then directly send an
+ * initial load from {@link WebSocketInitLoadConfigProperties#getProxyUrl()} to the subscribed topic.
+ */
 @Component
 public class StompSubscriptionEventListener implements ApplicationListener<SessionSubscribeEvent> {
 
@@ -43,26 +53,35 @@ public class StompSubscriptionEventListener implements ApplicationListener<Sessi
     @Autowired
     private WebSocketInitLoadConfigProperties initLoadConfigProperties;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public void onApplicationEvent(final SessionSubscribeEvent event) {
-        if (StringUtils.isEmpty(initLoadConfigProperties.getProxyUrl())) {
+        if (ObjectUtils.isEmpty(initLoadConfigProperties.getProxyUrl())) {
             // nothing to proxy
             return;
         }
 
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
         String destination = sha.getDestination();
+        @SuppressWarnings("unchecked")
+        Map<String, List<String>> nativHeaders = (Map<String, List<String>>) sha.getHeader(NativeMessageHeaderAccessor.NATIVE_HEADERS);
 
         Matcher userDestMatcher = initLoadConfigProperties.getDestinationPatterns().matcher(destination);
         if (userDestMatcher.matches()) {
+            // call proxy-server
             String proxyUrl = getProxyUrl(userDestMatcher, initLoadConfigProperties.getProxyUrl());
-            // TODO handle Headers from sha.getMessageHeaders()?
-            ResponseEntity<String> response = restTemplate.getForEntity(proxyUrl, String.class);
-            String body = response.getBody();
-            Map<String, ?> headers = null; // TODO handle Headers from Response?
-            messagingTemplate.send(destination, MessageBuilder.withPayload(body.getBytes(StandardCharsets.UTF_8)).copyHeaders(headers).build());
+            HttpHeaders headers = new HttpHeaders();
+            nativHeaders.forEach((k, v) -> headers.addAll(k, v));
+            ResponseEntity<byte[]> response = restTemplate.exchange(proxyUrl, HttpMethod.GET, new HttpEntity<>(headers), byte[].class);
+
+            // relay response to the subscribed subject:
+            HttpHeaders respHeaders = response.getHeaders();
+            Message<byte[]> stompMessage = MessageBuilder
+                    .withPayload(response.getBody())
+                    .copyHeaders(Collections.singletonMap(NativeMessageHeaderAccessor.NATIVE_HEADERS, respHeaders))
+                    .build();
+            messagingTemplate.send(destination, stompMessage);
         }
     }
 
@@ -76,4 +95,3 @@ public class StompSubscriptionEventListener implements ApplicationListener<Sessi
     }
 
 }
-
