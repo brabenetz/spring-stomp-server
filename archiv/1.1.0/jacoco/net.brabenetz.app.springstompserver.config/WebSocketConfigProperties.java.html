@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebSocketConfigProperties.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Stomp Server</a> &gt; <a href="index.source.html" class="el_package">net.brabenetz.app.springstompserver.config</a> &gt; <span class="el_source">WebSocketConfigProperties.java</span></div><h1>WebSocketConfigProperties.java</h1><pre class="source lang-java linenums">/*-
+ * #%L
+ * Spring Stomp Server
+ * ===============================================================
+ * Copyright (C) 2020 Brabenetz Harald, Austria
+ * ===============================================================
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package net.brabenetz.app.springstompserver.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
+
+/**
+ * Additional Websocket Stomp Properties use in the {@link WebSocketConfig}.
+ */
+@Component
+@ConfigurationProperties(&quot;spring-stomp-server&quot;)
+@SuppressWarnings(&quot;PMD.DataClass&quot;)
+<span class="fc" id="L34">public class WebSocketConfigProperties {</span>
+
+    /**
+     * The Simple Message Broker destination prefixes which are handled by the WebSocket Stomp-Endpoint.
+     */
+<span class="fc" id="L39">    private String[] destinationPrefixes = new String[] {&quot;/topic&quot;, &quot;/app&quot;, &quot;/user&quot;};</span>
+
+    /**
+     * The Websocket Endpoint which are handled by the {@link StompEndpointRegistry}.
+     * &lt;p&gt;
+     * Both variants with and without sockJs are supported.
+     */
+<span class="fc" id="L46">    private String[] websocketEndpoints = new String[] {&quot;/websocket&quot;};</span>
+
+    /**
+     * The WebSocketTransportRegistration messageSizeLimit. Optional, The default value is 64K (i.e. 64 * 1024).
+     *
+     * @see WebSocketTransportRegistration#setMessageSizeLimit(int)
+     */
+    private Integer messageSizeLimit;
+
+    /**
+     * The WebSocketTransportRegistration sendBufferSizeLimit. Optional, The default value is 512K (i.e. 512 * 1024).
+     *
+     * @see WebSocketTransportRegistration#setSendBufferSizeLimit(int)
+     */
+    private Integer sendBufferSizeLimit;
+
+    /**
+     * The WebSocketTransportRegistration sendTimeLimit. Optional, The default value is 10 seconds (i.e. 10 * 10000).
+     *
+     * @see WebSocketTransportRegistration#setSendTimeLimit(int)
+     */
+    private Integer sendTimeLimit;
+
+    /**
+     * The WebSocketTransportRegistration timeToFirstMessage. Optional, The default is set to 60,000 (1 minute).
+     *
+     * @see WebSocketTransportRegistration#setTimeToFirstMessage(int)
+     */
+    private Integer timeToFirstMessage;
+
+    /**
+     * The activation of SocketJs: Set to true if a SockJs-Supported Endpoint should be registered.
+     * &lt;p&gt;
+     * Default is false, because nowadays (2020) all Browsers support Websockets natively.
+     *
+     * @see &lt;a href=&quot;https://stomp-js.github.io/guide/stompjs/rx-stomp/ng2-stompjs/using-stomp-with-sockjs.html&quot;&gt;StompJs: using-stomp-with-sockjs.html&lt;/a&gt;
+     */
+    private boolean withSockJs;
+
+    /**
+     * The cache limit to apply for registrations with the broker.
+     * &lt;p&gt;
+     * This is currently only applied for the destination cache in the subscription registry. The default cache limit there is 1024.
+     * &lt;p&gt;
+     * For performance-testing read https://programmersought.com/article/58855147686/ &lt;br&gt;
+     * ... There is a fatal weakness in SimpleBrokerMessageHandler ... &lt;br&gt;
+     * ... If the cache size exceeds the cacheLimit value, the original old The data is cleaned up, and when it is read again ...
+     */
+<span class="fc" id="L94">    private int brokerRegistryCacheLimit = 1024;</span>
+
+    /**
+     * The MessageChannel PoolSize used for incoming messages from WebSocket clients.&lt;br&gt;
+     * See {@link WebSocketMessageBrokerConfigurer#configureClientInboundChannel(org.springframework.messaging.simp.config.ChannelRegistration)}
+     * &lt;p&gt;
+     * By default the channel is backedby a thread pool of size 1.
+     */
+<span class="fc" id="L102">    private int channelInboundCorePoolSize = 1;</span>
+
+    /**
+     * The MessageChannel PoolSize used for outbound messages to WebSocket clients.&lt;br&gt;
+     * See {@link WebSocketMessageBrokerConfigurer#configureClientOutboundChannel(org.springframework.messaging.simp.config.ChannelRegistration)}
+     * &lt;p&gt;
+     * By default the channel is backed by a thread pool of size 1.
+     */
+<span class="fc" id="L110">    private int channelOutboundCorePoolSize = 1;</span>
+
+    /**
+     * The channel PoolSize used to send messages from the application to the message broker.
+     * &lt;p&gt;
+     * By default, messages from the application to the message broker are sent synchronously, which means application code sending a message will find out if
+     * the message cannot be sent through an exception. &lt;br&gt;
+     * However, this can be changed if the broker channel is configured here with task executor properties.
+     */
+<span class="fc" id="L119">    private int channelBrokerCorePoolSize = 1;</span>
+
+    /**
+     * Gets the Simple Message Broker destination prefixes which are handled by the WebSocket Stomp-Endpoint.
+     *
+     * @return the Simple Message Broker destination prefixes which are handled by the WebSocket Stomp-Endpoint
+     */
+    public String[] getDestinationPrefixes() {
+<span class="fc" id="L127">        return destinationPrefixes;</span>
+    }
+
+    /**
+     * Sets the Simple Message Broker destination prefixes which are handled by the WebSocket Stomp-Endpoint.
+     *
+     * @param destinationPrefixes the new Simple Message Broker destination prefixes which are handled by the WebSocket Stomp-Endpoint
+     */
+    public void setDestinationPrefixes(final String... destinationPrefixes) {
+<span class="fc" id="L136">        this.destinationPrefixes = destinationPrefixes;</span>
+<span class="fc" id="L137">    }</span>
+
+    /**
+     * Gets the Websocket Endpoint which are handled by the {@link StompEndpointRegistry}.
+     * &lt;p&gt;
+     * Both variants with and without sockJs are supported.
+     *
+     * @return the Websocket Endpoint which are handled by the {@link StompEndpointRegistry}
+     */
+    public String[] getWebsocketEndpoints() {
+<span class="fc" id="L147">        return websocketEndpoints;</span>
+    }
+
+    /**
+     * Sets the Websocket Endpoint which are handled by the {@link StompEndpointRegistry}.
+     * &lt;p&gt;
+     * Both variants with and without sockJs are supported.
+     *
+     * @param websocketEndpoints the new Websocket Endpoint which are handled by the {@link StompEndpointRegistry}
+     */
+    public void setWebsocketEndpoints(final String... websocketEndpoints) {
+<span class="fc" id="L158">        this.websocketEndpoints = websocketEndpoints;</span>
+<span class="fc" id="L159">    }</span>
+
+    /**
+     * Gets the WebSocketTransportRegistration messageSizeLimit. Optional, The default value is 64K (i.e. 64 * 1024).
+     *
+     * @return the WebSocketTransportRegistration messageSizeLimit
+     */
+    public Integer getMessageSizeLimit() {
+<span class="fc" id="L167">        return messageSizeLimit;</span>
+    }
+
+    /**
+     * Sets the WebSocketTransportRegistration messageSizeLimit. Optional, The default value is 64K (i.e. 64 * 1024).
+     *
+     * @param messageSizeLimit the new WebSocketTransportRegistration messageSizeLimit
+     */
+    public void setMessageSizeLimit(Integer messageSizeLimit) {
+<span class="nc" id="L176">        this.messageSizeLimit = messageSizeLimit;</span>
+<span class="nc" id="L177">    }</span>
+
+    /**
+     * Gets the WebSocketTransportRegistration sendBufferSizeLimit. Optional, The default value is 512K (i.e. 512 * 1024).
+     *
+     * @return the WebSocketTransportRegistration sendBufferSizeLimit
+     */
+    public Integer getSendBufferSizeLimit() {
+<span class="fc" id="L185">        return sendBufferSizeLimit;</span>
+    }
+
+    /**
+     * Sets the WebSocketTransportRegistration sendBufferSizeLimit. Optional, The default value is 512K (i.e. 512 * 1024).
+     *
+     * @param sendBufferSizeLimit the new WebSocketTransportRegistration sendBufferSizeLimit
+     */
+    public void setSendBufferSizeLimit(Integer sendBufferSizeLimit) {
+<span class="nc" id="L194">        this.sendBufferSizeLimit = sendBufferSizeLimit;</span>
+<span class="nc" id="L195">    }</span>
+
+    /**
+     * Gets the WebSocketTransportRegistration sendTimeLimit. Optional, The default value is 10 seconds (i.e. 10 * 10000).
+     *
+     * @return the WebSocketTransportRegistration sendTimeLimit
+     */
+    public Integer getSendTimeLimit() {
+<span class="fc" id="L203">        return sendTimeLimit;</span>
+    }
+
+    /**
+     * Sets the WebSocketTransportRegistration sendTimeLimit. Optional, The default value is 10 seconds (i.e. 10 * 10000).
+     *
+     * @param sendTimeLimit the new WebSocketTransportRegistration sendTimeLimit
+     */
+    public void setSendTimeLimit(Integer sendTimeLimit) {
+<span class="nc" id="L212">        this.sendTimeLimit = sendTimeLimit;</span>
+<span class="nc" id="L213">    }</span>
+
+    /**
+     * Gets the WebSocketTransportRegistration timeToFirstMessage. Optional, The default is set to 60,000 (1 minute).
+     *
+     * @return the WebSocketTransportRegistration timeToFirstMessage
+     */
+    public Integer getTimeToFirstMessage() {
+<span class="fc" id="L221">        return timeToFirstMessage;</span>
+    }
+
+    /**
+     * Sets the WebSocketTransportRegistration timeToFirstMessage. Optional, The default is set to 60,000 (1 minute).
+     *
+     * @param timeToFirstMessage the new WebSocketTransportRegistration timeToFirstMessage
+     */
+    public void setTimeToFirstMessage(Integer timeToFirstMessage) {
+<span class="nc" id="L230">        this.timeToFirstMessage = timeToFirstMessage;</span>
+<span class="nc" id="L231">    }</span>
+
+    /**
+     * Checks if is activation of SocketJs: Set to true if a SockJs-Supported Endpoint should be registered.
+     * &lt;p&gt;
+     * Default is false, because nowadays (2020) all Browsers support Websockets natively.
+     *
+     * @return the activation of SocketJs: Set to true if a SockJs-Supported Endpoint should be registered
+     */
+    public boolean isWithSockJs() {
+<span class="fc" id="L241">        return withSockJs;</span>
+    }
+
+    /**
+     * Sets the activation of SocketJs: Set to true if a SockJs-Supported Endpoint should be registered.
+     * &lt;p&gt;
+     * Default is false, because nowadays (2020) all Browsers support Websockets natively.
+     *
+     * @param withSockJs the new activation of SocketJs: Set to true if a SockJs-Supported Endpoint should be registered
+     */
+    public void setWithSockJs(boolean withSockJs) {
+<span class="fc" id="L252">        this.withSockJs = withSockJs;</span>
+<span class="fc" id="L253">    }</span>
+
+    /**
+     * Gets the cache limit to apply for registrations with the broker.
+     * &lt;p&gt;
+     * This is currently only applied for the destination cache in the subscription registry. The default cache limit there is 1024.
+     * &lt;p&gt;
+     * For performance-testing read https://programmersought.com/article/58855147686/ &lt;br&gt;
+     * .. There is a fatal weakness in SimpleBrokerMessageHandler .. &lt;br&gt;
+     * .. If the cache size exceeds the cacheLimit value, the original old The data is cleaned up, and when it is read again ..
+     *
+     * @return the cache limit to apply for registrations with the broker
+     */
+    public int getBrokerRegistryCacheLimit() {
+<span class="fc" id="L267">        return brokerRegistryCacheLimit;</span>
+    }
+
+    /**
+     * Sets the cache limit to apply for registrations with the broker.
+     * &lt;p&gt;
+     * This is currently only applied for the destination cache in the subscription registry. The default cache limit there is 1024.
+     * &lt;p&gt;
+     * For performance-testing read https://programmersought.com/article/58855147686/ &lt;br&gt;
+     * .. There is a fatal weakness in SimpleBrokerMessageHandler .. &lt;br&gt;
+     * .. If the cache size exceeds the cacheLimit value, the original old The data is cleaned up, and when it is read again ..
+     *
+     * @param brokerRegistryCacheLimit the new cache limit to apply for registrations with the broker
+     */
+    public void setBrokerRegistryCacheLimit(int brokerRegistryCacheLimit) {
+<span class="nc" id="L282">        this.brokerRegistryCacheLimit = brokerRegistryCacheLimit;</span>
+<span class="nc" id="L283">    }</span>
+
+    /**
+     * Gets the MessageChannel PoolSize used for incoming messages from WebSocket clients.&lt;br&gt;
+     * See {@link WebSocketMessageBrokerConfigurer#configureClientInboundChannel(org.springframework.messaging.simp.config.ChannelRegistration)}
+     * &lt;p&gt;
+     * By default the channel is backedby a thread pool of size 1.
+     *
+     * @return the MessageChannel PoolSize used for incoming messages from WebSocket clients
+     */
+    public int getChannelInboundCorePoolSize() {
+<span class="fc" id="L294">        return channelInboundCorePoolSize;</span>
+    }
+
+    /**
+     * Sets the MessageChannel PoolSize used for incoming messages from WebSocket clients.&lt;br&gt;
+     * See {@link WebSocketMessageBrokerConfigurer#configureClientInboundChannel(org.springframework.messaging.simp.config.ChannelRegistration)}
+     * &lt;p&gt;
+     * By default the channel is backedby a thread pool of size 1.
+     *
+     * @param channelInboundCorePoolSize the new MessageChannel PoolSize used for incoming messages from WebSocket clients
+     */
+    public void setChannelInboundCorePoolSize(int channelInboundCorePoolSize) {
+<span class="nc" id="L306">        this.channelInboundCorePoolSize = channelInboundCorePoolSize;</span>
+<span class="nc" id="L307">    }</span>
+
+    /**
+     * Gets the MessageChannel PoolSize used for outbound messages to WebSocket clients.&lt;br&gt;
+     * See {@link WebSocketMessageBrokerConfigurer#configureClientOutboundChannel(org.springframework.messaging.simp.config.ChannelRegistration)}
+     * &lt;p&gt;
+     * By default the channel is backed by a thread pool of size 1.
+     *
+     * @return the MessageChannel PoolSize used for outbound messages to WebSocket clients
+     */
+    public int getChannelOutboundCorePoolSize() {
+<span class="fc" id="L318">        return channelOutboundCorePoolSize;</span>
+    }
+
+    /**
+     * Sets the MessageChannel PoolSize used for outbound messages to WebSocket clients.&lt;br&gt;
+     * See {@link WebSocketMessageBrokerConfigurer#configureClientOutboundChannel(org.springframework.messaging.simp.config.ChannelRegistration)}
+     * &lt;p&gt;
+     * By default the channel is backed by a thread pool of size 1.
+     *
+     * @param channelOutboundCorePoolSize the new MessageChannel PoolSize used for outbound messages to WebSocket clients
+     */
+    public void setChannelOutboundCorePoolSize(int channelOutboundCorePoolSize) {
+<span class="nc" id="L330">        this.channelOutboundCorePoolSize = channelOutboundCorePoolSize;</span>
+<span class="nc" id="L331">    }</span>
+
+    /**
+     * Gets the channel PoolSize used to send messages from the application to the message broker.
+     * &lt;p&gt;
+     * By default, messages from the application to the message broker are sent synchronously, which means application code sending a message will find out if
+     * the message cannot be sent through an exception. &lt;br&gt;
+     * However, this can be changed if the broker channel is configured here with task executor properties.
+     *
+     * @return the channel PoolSize used to send messages from the application to the message broker
+     */
+    public int getChannelBrokerCorePoolSize() {
+<span class="fc" id="L343">        return channelBrokerCorePoolSize;</span>
+    }
+
+    /**
+     * Sets the channel PoolSize used to send messages from the application to the message broker.
+     * &lt;p&gt;
+     * By default, messages from the application to the message broker are sent synchronously, which means application code sending a message will find out if
+     * the message cannot be sent through an exception. &lt;br&gt;
+     * However, this can be changed if the broker channel is configured here with task executor properties.
+     *
+     * @param channelBrokerCorePoolSize the new channel PoolSize used to send messages from the application to the message broker
+     */
+    public void setChannelBrokerCorePoolSize(int channelBrokerCorePoolSize) {
+<span class="nc" id="L356">        this.channelBrokerCorePoolSize = channelBrokerCorePoolSize;</span>
+<span class="nc" id="L357">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

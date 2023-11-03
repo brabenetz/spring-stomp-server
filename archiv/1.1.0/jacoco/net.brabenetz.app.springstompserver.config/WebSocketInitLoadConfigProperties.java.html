@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebSocketInitLoadConfigProperties.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Stomp Server</a> &gt; <a href="index.source.html" class="el_package">net.brabenetz.app.springstompserver.config</a> &gt; <span class="el_source">WebSocketInitLoadConfigProperties.java</span></div><h1>WebSocketInitLoadConfigProperties.java</h1><pre class="source lang-java linenums">/*-
+ * #%L
+ * Spring Stomp Server
+ * ===============================================================
+ * Copyright (C) 2020 - 2023 Brabenetz Harald, Austria
+ * ===============================================================
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package net.brabenetz.app.springstompserver.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.regex.Pattern;
+
+/**
+ * Websocket Stomp Properties use in the {@link WebSocketConfig}.
+ */
+@Component
+@ConfigurationProperties(&quot;spring-stomp-server.init-load&quot;)
+@SuppressWarnings(&quot;PMD.DataClass&quot;)
+@Validated
+<span class="fc" id="L35">public class WebSocketInitLoadConfigProperties {</span>
+
+    /**
+     * The Websocket Subscription destination pattern like &quot;/user/00001111-2222-3333-4444-555566667777/topic/...&quot;.
+     * &lt;p&gt;
+     * Default is &quot;^/user/[^/]+/topic/(.*)$&quot;
+     */
+<span class="fc" id="L42">    private Pattern destinationPatterns = Pattern.compile(&quot;^/user/[^/]+/topic/(.*)$&quot;);</span>
+
+    /**
+     * The proxy url from where the init load should be get, like: &quot;http://localhost:8181/my-mock-endpoint/${group-1}&quot;.
+     * &lt;p&gt;
+     * Only GET requests are supported.&lt;br&gt;
+     * ${group-1}, ${group-2}, ${group-3}, ... ${group-X} reference to the group-pattern from {@link #getDestinationPatterns()}.&lt;br&gt;
+     * The Proxy-Server can then be a Mock-Server like https://wiremock.org/
+     */
+    private String proxyUrl;
+
+    /**
+     * Gets the Websocket Subscription destination pattern like &quot;/user/00001111-2222-3333-4444-555566667777/topic/..&quot;.
+     * &lt;p&gt;
+     * Default is &quot;^/user/[^/]+/topic/(.*)$&quot;.
+     *
+     * @return the Websocket Subscription destination pattern like &quot;/user/00001111-2222-3333-4444-555566667777/topic/
+     */
+    public Pattern getDestinationPatterns() {
+<span class="fc" id="L61">        return destinationPatterns;</span>
+    }
+
+    /**
+     * Sets the Websocket Subscription destination pattern like &quot;/user/00001111-2222-3333-4444-555566667777/topic/..&quot;.
+     * &lt;p&gt;
+     * Default is &quot;^/user/[^/]+/topic/(.*)$&quot;.
+     *
+     * @param destinationPatterns the new Websocket Subscription destination pattern like &quot;/user/00001111-2222-3333-4444-555566667777/topic/
+     */
+    public void setDestinationPatterns(Pattern destinationPatterns) {
+<span class="fc" id="L72">        this.destinationPatterns = destinationPatterns;</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Gets the proxy url from where the init load should be get, like: &quot;http://localhost:8181/my-mock-endpoint/${group-1}&quot;.
+     * &lt;p&gt;
+     * Only GET requests are supported.&lt;br&gt;
+     * ${group-1}, ${group-2}, ${group-3}, .. ${group-X} reference to the group-pattern from {@link #getDestinationPatterns()}.&lt;br&gt;
+     * The Proxy-Server can then be a Mock-Server like https://wiremock.org/.
+     *
+     * @return the proxy url from where the init load should be get, like: &quot;http://localhost:8181/my-mock-endpoint/${group-1}&quot;
+     */
+    public String getProxyUrl() {
+<span class="fc" id="L85">        return proxyUrl;</span>
+    }
+
+    /**
+     * Sets the proxy url from where the init load should be get, like: &quot;http://localhost:8181/my-mock-endpoint/${group-1}&quot;.
+     * &lt;p&gt;
+     * Only GET requests are supported.&lt;br&gt;
+     * ${group-1}, ${group-2}, ${group-3}, .. ${group-X} reference to the group-pattern from {@link #getDestinationPatterns()}.&lt;br&gt;
+     * The Proxy-Server can then be a Mock-Server like https://wiremock.org/.
+     *
+     * @param proxyUrl the new proxy url from where the init load should be get, like: &quot;http://localhost:8181/my-mock-endpoint/${group-1}&quot;
+     */
+    public void setProxyUrl(String proxyUrl) {
+<span class="fc" id="L98">        this.proxyUrl = proxyUrl;</span>
+<span class="fc" id="L99">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
