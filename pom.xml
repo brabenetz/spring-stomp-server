@@ -5,12 +5,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.15</version>
-        <relativePath></relativePath>
+        <relativePath />
         <!-- lookup parent from repository -->
     </parent>
     <groupId>net.brabenetz.app</groupId>
     <artifactId>spring-stomp-server</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>Spring Stomp Server</name>
     <description>Spring Stomp Server for ui e2e Websocket testing</description>
 
@@ -42,12 +42,12 @@
         </developer>
     </developers>
 
-    <contributors></contributors>
+    <contributors />
 
     <scm>
         <connection>scm:git:git@github.com:brabenetz/spring-stomp-server.git</connection>
         <developerConnection>scm:git:git@github.com:brabenetz/spring-stomp-server.git</developerConnection>
-        <tag>spring-stomp-server-1.1.0</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/brabenetz/spring-stomp-server</url>
     </scm>
 
@@ -59,7 +59,7 @@
     <ciManagement>
         <system>Travis</system>
         <url>https://travis-ci.org/brabenetz/spring-stomp-server</url>
-        <notifiers></notifiers>
+        <notifiers />
     </ciManagement>
 
     <distributionManagement>
@@ -87,13 +87,13 @@
         <dependency-wagon-git.version>2.0.3</dependency-wagon-git.version>
         <dependency-wagon-ssh.version>3.4.0</dependency-wagon-ssh.version>
         <dependency-wiremock-spring-boot.version>2.0.0</dependency-wiremock-spring-boot.version>
-        <java.test.version>11</java.test.version>
         <java.version>8</java.version>
-        <jetty.version>11.0.17</jetty.version>
+        <java.test.version>11</java.test.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.testSource>${java.test.version}</maven.compiler.testSource>
         <maven.compiler.testTarget>${java.test.version}</maven.compiler.testTarget>
+        <jetty.version>11.0.17</jetty.version>
 
         <maven.version.rules>file:./src/config/dependency-version-rules.xml</maven.version.rules>
         <plugin-animal-sniffer-maven-plugin.version>1.23</plugin-animal-sniffer-maven-plugin.version>
@@ -141,17 +141,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.maciejwalkowiak.spring</groupId>
-            <artifactId>wiremock-spring-boot</artifactId>
-            <version>${dependency-wiremock-spring-boot.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -167,9 +157,19 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <scope>test</scope>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.maciejwalkowiak.spring</groupId>
+            <artifactId>wiremock-spring-boot</artifactId>
+            <version>${dependency-wiremock-spring-boot.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -281,7 +281,8 @@
                         <additionalConfig>
                             <file>
                                 <name>.checkstyle</name>
-                                <content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                                <content>
+                                    <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
   <fileset-config file-format-version="1.2.0" simple-config="true">
       <local-check-config name="${project.artifactId}-checkstyle" location="src/config/checkstyle.xml" type="project" description="plugin-config-checkstyleuration for ${project.artifactId}">
           <property name="checkstyle.header.file" value="${plugin-config-checkstyle-header-location}" />
@@ -293,21 +294,25 @@
     <filter name="FileTypesFilter" enabled="true">
       <filter-data value="java" />
     </filter>
-  </fileset-config>]]></content>
+  </fileset-config>]]>
+                                </content>
                             </file>
                             <file>
                                 <name>.pmd</name>
-                                <content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                                <content>
+                                    <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
   <pmd>
       <useProjectRuleSet>true</useProjectRuleSet>
       <ruleSetFile>${basedir}/src/config/pmd5-rulesets.xml</ruleSetFile>
       <includeDerivedFiles>false</includeDerivedFiles>
       <violationsAsErrors>true</violationsAsErrors>
-  </pmd>]]></content>
+  </pmd>]]>
+                                </content>
                             </file>
                             <file>
                                 <name>.classpath</name>
-                                <content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                                <content>
+                                    <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
   <classpathentry kind="src" output="target/classes" path="src/main/java">
     <attributes>
@@ -342,7 +347,8 @@
     </attributes>
   </classpathentry>
   <classpathentry kind="output" path="target/classes" />
-</classpath>]]></content>
+</classpath>]]>
+                                </content>
                             </file>
                         </additionalConfig>
                     </configuration>
@@ -647,7 +653,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore></ignore>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
